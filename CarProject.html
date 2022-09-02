@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/CarProject.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <title>CarProject</title>
+</head>
+<style>
+    body{
+        background-color: #5800FF;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    }
+</style>
+
+<body class=" d-flex justify-content-center ">
+
+
+    <main class="col-12 col-lg-9 ">
+
+        <div class="row p-0 m-0 mt-5 justify-content-center  col-12 col-md-8">
+            <label class="col-3 mt-3" for="#car">CarBrand :</label>
+            <input class="col-8 mt-3" id="car" type="text" autofocus placeholder="CarBrand">
+            <label class="col-3 mt-3" for="#car">Color :</label>
+            <input class="col-8 mt-3" id="color" type="text" autofocus placeholder="Color">
+            <label class="col-3 mt-3" for="#car">Model :</label>
+            <input class="col-8 mt-3" id="model" type="text" autofocus placeholder="Model">
+
+            <button id="first-btn" class=" bttn col-3 mt-3 mb-2" onclick="add()">add</button>
+            <button id="second-btn" class=" bttn col-3 mt-3 mb-2 d-none" onclick="last_edit()">edit</button>
+
+
+        </div>
+
+        <ul id="list" class="p-0 mt-5">
+            <li class=" list-1 col-12 ">
+                <div class="row justify-content-center m-0 p-0 pb-2 ps-1 id="shayan1">
+                    <h2 class="col-4 mt-2">CarBrand</h2>
+                    <h3 class="col-4 mt-2">Color</h3>
+                    <h4 class="col-4 mt-2">Model</h4>
+                    <span class="col-12 mt-3" onclick="edit(this)">Edit</span>
+                    <span class="col-12 mt-1" onclick="del(this)">Delete</span>
+                </div>
+            </li>
+
+
+
+        </ul>
+
+
+    </main>
+
+
+
+    <script>
+        let _id = 1;
+
+        function add() {
+            let x = document.getElementById('car').value
+            let y = document.getElementById('color').value
+            let z = document.getElementById('model').value
+
+            if (x == ' ' || y == ' ' || z == ' ' || x =='' || y =='' || z =='') {
+                alert('Fill out the form completely')
+            } else {
+
+                let _tag = document.createElement("li")
+                _tag.classList.add('col-12', 'list_1')
+                _id++
+                _tag.setAttribute('id', 'shayan' + _id)
+                _tag.innerHTML = `
+                <div class="row justify-content-center m-0 p-0 pb-2 ps-1">
+                    <h2 class="col-4 mt-4">${x}</h2>
+                    <h3 class="col-4 mt-4">${y}</h3>
+                    <h4 class="col-4 mt-4">${z}</h4>
+                    <span class="col-12 mt-3" onclick="edit(this)">Edit</span>
+                    <span class="col-12 mt-1" onclick="del(this)">Delete</span>
+                </div>                                               
+                `
+                document.getElementById('list').appendChild(_tag)
+                document.getElementById('car').value = null
+                document.getElementById('color').value = null
+                document.getElementById('model').value = null
+            }
+        }
+
+        // end add/////////////////////////////////////////////////////////
+
+
+        function del(self) {
+
+            if (confirm('are you sure ??')) {
+                self.parentElement.parentElement.remove()
+            }
+        }
+
+        // end delete ///////////////////////////////////////////////////
+
+        let turn
+
+        function edit(self) {
+
+            turn = self.parentElement.parentElement.getAttribute('id')
+
+            document.getElementById('model').value = (self.previousSibling.previousSibling.innerText)
+            document.getElementById('color').value = (self.previousSibling.previousSibling.previousSibling
+                .previousSibling.innerText)
+            document.getElementById('car').value = (self.previousSibling.previousSibling.previousSibling.previousSibling
+                .previousSibling.previousSibling.innerText)
+
+
+            document.getElementById('first-btn').classList.add('d-none')
+            document.getElementById('second-btn').classList.remove('d-none')
+            
+
+
+
+        }
+
+
+
+        function last_edit() {
+            document.querySelector('#' + turn + '>div>h2').innerText = document.getElementById('car').value
+            document.querySelector('#' + turn + '>div>h3').innerText = document.getElementById('color').value
+            document.querySelector('#' + turn + '>div>h4').innerText = document.getElementById('model').value
+            document.getElementById('car').value = null
+            document.getElementById('color').value = null
+            document.getElementById('model').value = null
+
+            document.getElementById('first-btn').classList.remove('d-none')
+            document.getElementById('second-btn').classList.add('d-none')
+
+
+
+
+
+
+
+
+        }
+    </script>
+
+</body>
+
+</html>
